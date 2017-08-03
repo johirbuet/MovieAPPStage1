@@ -2,6 +2,7 @@ package com.johir.movies.moviestage1;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,10 +29,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")){
+            String path = MovieDataHelpers.API_BASE_URL+ MovieDataHelpers.POPULAR_MOVIES_END_POINT +
+                    MovieDataHelpers.KEY_PREFIX + MovieDataHelpers.API_KEY;
+            loadMoviedata(path);
+        }
+        else
+        {
+            MovieData.setMovies((Movie [])savedInstanceState.getParcelableArray("movies"));
+        }
         setContentView(R.layout.activity_main);
-        String path = MovieDataHelpers.API_BASE_URL+ MovieDataHelpers.POPULAR_MOVIES_END_POINT +
-                MovieDataHelpers.KEY_PREFIX + MovieDataHelpers.API_KEY;
-        loadMoviedata(path);
+
         gv = (GridView) findViewById(R.id.gridview);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -44,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putParcelableArray("movies",MovieData.getMovies());
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

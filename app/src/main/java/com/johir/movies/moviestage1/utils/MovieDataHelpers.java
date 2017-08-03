@@ -5,7 +5,7 @@ package com.johir.movies.moviestage1.utils;
  */
 
 public class MovieDataHelpers {
-    public static final String API_KEY = "YOUR KEY";
+    public static final String API_KEY = "296c4cbe6561c02266090838431c477f";
     public static final String BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String SIZE = "w185";
     public static final String API_BASE_URL = "http://api.themoviedb.org/3";
